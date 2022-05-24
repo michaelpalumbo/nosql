@@ -19,7 +19,7 @@ const userController = {
             .then(dbUserData => {
                 // if no user found, send 404
                 if(!dbUserData){
-                    res.status(404).json({message: 'No pizza found with this id!' });
+                    res.status(404).json({message: 'No thought found with this id!' });
                     return;
                 } 
                 res.json(dbUserData)
@@ -63,7 +63,13 @@ const userController = {
                 res.json(dbUserData)
             })
             .catch(err => res.status(404).json(err))
-    }
+    },
+    // TODO
+    // /api/users/:userId/friends/:friendId
+    // POST to add a new friend to a user's friend list
+
+    // DELETE to remove a friend from a user's friend list
+
 }
 
 module.exports = userController;
