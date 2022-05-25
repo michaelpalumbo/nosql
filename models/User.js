@@ -17,13 +17,21 @@ const UserSchema = new Schema({
         //     message: 'Email validation failed'
         // }
     },
-    // TODO Array of _id values referencing the Thought model
-    thoughts: {
-
-    },
-    friends: {
-        // TODO Array of _id values referencing the User model (self-reference)
-    }
+    //  Array of _id values referencing the Thought model
+    thoughts: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Thought'
+        }
+    ],
+    friends: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      ]
+        // Array of _id values referencing the User model (self-reference)
+    
 })
 
 //  TODO Schema Settings: Create a virtual called friendCount that retrieves the length of the user's friends array field on query.

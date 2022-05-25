@@ -54,7 +54,7 @@ const userController = {
     // delete a user by id
     // DELETE /api/users/:id
     deleteUser({ params}, res) {
-        User.findOneAndDelete({ _id: params.id})
+        User.findOneAndDelete({ _id: params.id}, { new: true})
             .then(dbUserData => {
                 if(!dbUserData){
                     res.status(404).json({ message: 'no user found with this id'})
@@ -67,9 +67,31 @@ const userController = {
     // TODO
     // /api/users/:userId/friends/:friendId
     // POST to add a new friend to a user's friend list
-
+    addFriend({ params, body}, res) {
+        User.findOneAndUpdate({ _id: params.userId}, { $push: { friends: params.friendId  } }, { new: true})
+            .then(dbUserData => {
+                if (!dbUserData){
+                    res.status(404).json({ message: 'no user found with this id'})
+                    return;
+                }
+                res.json(dbUserData)
+            })
+            .catch(err => res.status(400).json(err))
+    },
     // DELETE to remove a friend from a user's friend list
+    // /api/users/:userId/friends/:friendId
 
+    deleteFriend({ params}, res) {
+        User.findOneAndUpdate({ _id: params.userId}, { $pull: { friends: params.friendId  } }, { new: true})
+            .then(dbUserData => {
+                if(!dbUserData){
+                    res.status(404).json({ message: 'no user found with this id'})
+                    return;
+                }
+                res.json(dbUserData)
+            })
+            .catch(err => res.status(404).json(err))
+    },
 }
 
 module.exports = userController;

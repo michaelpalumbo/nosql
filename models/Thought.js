@@ -14,9 +14,13 @@ const ThoughtSchema = new Schema({
         type: String,
         required: true
     },
-    reactions: {
-        // TODO Array of nested documents created with the reactionSchema
-    }
+    reactions: 
+    [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Reaction'
+        }
+    ]
 })
 
 //  TODO Schema Settings: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
